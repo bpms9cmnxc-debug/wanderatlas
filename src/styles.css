@@ -1,0 +1,162 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #0b0d10;
+  --color-surface: #13171c;
+  --color-surface-2: #1a2027;
+  --color-fg: #eceae4;
+  --color-muted: #8f959c;
+  --color-subtle: #6b7178;
+  --color-border: rgb(236 234 228 / 0.1);
+  --color-border-strong: rgb(236 234 228 / 0.2);
+  --color-accent: #9eb8b2;
+  --color-accent-fg: #0b0d10;
+  --color-ocean: #0e1217;
+  --color-land: #1a2128;
+  --color-visited: #c5ddd6;
+  --color-choro-0: #1c2d33;
+  --color-choro-1: #31555a;
+  --color-choro-2: #4d7c77;
+  --color-choro-3: #7eaaa2;
+  --color-choro-4: #c5e2da;
+  --font-sans: "Figtree", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Fraunces", "Iowan Old Style", Georgia, serif;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+}
+
+:root {
+  --motion-stagger: 40ms;
+  --motion-micro: 80ms;
+  --motion-quick: 150ms;
+  --motion-fast: 250ms;
+  --motion-medium: 350ms;
+  --motion-slow: 400ms;
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-smooth-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --shadow-border: 0 0 0 1px rgb(236 234 228 / 0.08);
+  --shadow-float:
+    0 0 0 1px rgb(236 234 228 / 0.08), 0 18px 40px -18px rgb(0 0 0 / 0.55);
+}
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background: var(--color-bg);
+    color: var(--color-fg);
+    overflow: hidden;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100dvh;
+    background: var(--color-bg);
+    color: var(--color-fg);
+    font-family: var(--font-sans);
+  }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+}
+
+.metric-switcher {
+  scrollbar-width: none;
+}
+.metric-switcher::-webkit-scrollbar {
+  display: none;
+}
+
+.atlas-svg:active {
+  cursor: grabbing;
+}
+
+.atlas-sphere {
+  fill: var(--color-ocean);
+  stroke: rgb(236 234 228 / 0.08);
+  stroke-width: 1.1;
+  vector-effect: non-scaling-stroke;
+  pointer-events: none;
+}
+
+.atlas-graticule {
+  fill: none;
+  stroke: rgb(158 184 178 / 0.12);
+  stroke-width: 0.5;
+  vector-effect: non-scaling-stroke;
+  pointer-events: none;
+}
+
+.atlas-country {
+  stroke: var(--color-bg);
+  stroke-width: 0.4;
+  vector-effect: non-scaling-stroke;
+  cursor: pointer;
+  transition:
+    fill var(--motion-fast) var(--ease-out),
+    stroke var(--motion-quick) var(--ease-out),
+    stroke-width var(--motion-quick) var(--ease-out),
+    filter var(--motion-quick) var(--ease-out);
+}
+
+.atlas-country:hover {
+  filter: brightness(1.18);
+  stroke: var(--color-fg);
+  stroke-width: 1;
+}
+
+.atlas-country-visited {
+  stroke: var(--color-visited);
+  stroke-width: 0.9;
+}
+
+.atlas-country-selected {
+  stroke: var(--color-fg);
+  stroke-width: 1.2;
+}
+
+.atlas-selected-outline {
+  fill: none;
+  stroke: var(--color-fg);
+  stroke-width: 1.6;
+  vector-effect: non-scaling-stroke;
+  pointer-events: none;
+}
+
+.atlas-tooltip {
+  animation: tooltip-in var(--motion-quick) var(--ease-out);
+}
+
+@keyframes tooltip-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .atlas-country,
+  .atlas-tooltip,
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
