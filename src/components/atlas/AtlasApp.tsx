@@ -27,6 +27,8 @@ export function AtlasApp() {
   }, []);
 
   const visits = useVisitStore((s) => s.visits);
+  const hydrated = useVisitStore((s) => s.hydrated);
+  const shownVisits = hydrated ? visits : {};
   const toggleVisit = useVisitStore((s) => s.toggleVisit);
   const setNote = useVisitStore((s) => s.setNote);
   const setSince = useVisitStore((s) => s.setSince);
@@ -39,7 +41,7 @@ export function AtlasApp() {
     return feat?.country ?? null;
   }, [selectedKey]);
 
-  const coverage = computeCoverage(visits);
+  const coverage = computeCoverage(shownVisits);
 
   function pickCountry(c: Country) {
     setSelectedKey(c.iso2);
@@ -100,7 +102,7 @@ export function AtlasApp() {
             features={ready ? WORLD : []}
             loading={!ready}
             metric={metric}
-            visits={visits}
+            visits={shownVisits}
             selectedKey={selectedKey}
             focusNonce={focusNonce}
             onSelect={selectFromMap}
@@ -123,7 +125,7 @@ export function AtlasApp() {
         <div className="hidden w-[22.5rem] shrink-0 border-l border-border lg:block">
           <Sidebar
             selected={selected}
-            visits={visits}
+            visits={shownVisits}
             onToggle={toggleVisit}
             onNote={setNote}
             onSince={setSince}
@@ -146,7 +148,7 @@ export function AtlasApp() {
             <div className="h-[min(72dvh,640px)]">
               <Sidebar
                 selected={selected}
-                visits={visits}
+                visits={shownVisits}
                 onToggle={toggleVisit}
                 onNote={setNote}
                 onSince={setSince}

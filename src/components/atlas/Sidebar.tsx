@@ -56,8 +56,9 @@ export function Sidebar({
       </div>
       <div className="flex items-center gap-2 border-t border-border px-5 py-3">
         <a
-          href="/downloads/Wanderatlas-macOS.zip"
-          download
+          href="https://github.com/bpms9cmnxc-debug/wanderatlas/releases/latest"
+          target="_blank"
+          rel="noreferrer"
           className="inline-flex h-8 flex-1 items-center justify-center gap-2 rounded-lg px-3 text-xs font-medium text-muted transition-colors duration-(--motion-quick) hover:bg-surface-2 hover:text-fg"
         >
           <Download className="size-3.5" />
