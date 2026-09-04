@@ -286,6 +286,13 @@ export const COUNTRIES: Country[] = [
   { iso2: "AX", iso3: "ALA", key: "248", name: 'Åland', nameEn: 'Åland', capital: 'Mariehamn', continent: "europa", population: 30000, gdpBillionUsd: 1.6, areaKm2: 1580.0, hdi: 0.0, lifeExpectancy: 82.0, kind: "t" },
   { iso2: "NCX", iso3: "NCX", key: "name:N. Cyprus", name: 'Nordzypern', nameEn: 'Northern Cyprus', capital: 'Nord-Nikosia', continent: "europa", population: 380000, gdpBillionUsd: 4.0, areaKm2: 3355.0, hdi: 0.0, lifeExpectancy: 78.0, kind: "t" },
   { iso2: "SOL", iso3: "SOL", key: "name:Somaliland", name: 'Somaliland', nameEn: 'Somaliland', capital: 'Hargeisa', continent: "afrika", population: 5800000, gdpBillionUsd: 3.5, areaKm2: 176120.0, hdi: 0.0, lifeExpectancy: 64.0, kind: "t" },
+  { iso2: "GS", iso3: "SGS", key: "239", name: 'Südgeorgien und die Südlichen Sandwichinseln', nameEn: 'South Georgia', capital: 'King Edward Point', continent: "suedamerika", population: 30, gdpBillionUsd: 0.0, areaKm2: 3903.0, hdi: 0.0, lifeExpectancy: 0.0, kind: "t" },
+  { iso2: "IO", iso3: "IOT", key: "086", name: 'Britisches Territorium im Indischen Ozean', nameEn: 'British Indian Ocean Territory', capital: 'Diego Garcia', continent: "asien", population: 3000, gdpBillionUsd: 0.0, areaKm2: 60.0, hdi: 0.0, lifeExpectancy: 0.0, kind: "t" },
+  { iso2: "HM", iso3: "HMD", key: "334", name: 'Heard und McDonaldinseln', nameEn: 'Heard Island and McDonald Islands', capital: '', continent: "antarktika", population: 0, gdpBillionUsd: 0.0, areaKm2: 412.0, hdi: 0.0, lifeExpectancy: 0.0, kind: "x" },
+  { iso2: "NF", iso3: "NFK", key: "574", name: 'Norfolkinsel', nameEn: 'Norfolk Island', capital: 'Kingston', continent: "ozeanien", population: 2200, gdpBillionUsd: 0.0, areaKm2: 35.0, hdi: 0.0, lifeExpectancy: 0.0, kind: "t" },
+  { iso2: "IOT", iso3: "ATF", key: "name:Indian Ocean Ter.", name: 'Französische Inseln im Indischen Ozean', nameEn: 'Indian Ocean Territories', capital: '', continent: "afrika", population: 0, gdpBillionUsd: 0.0, areaKm2: 0.0, hdi: 0.0, lifeExpectancy: 0.0, kind: "x" },
+  { iso2: "SXX", iso3: "SXX", key: "name:Siachen Glacier", name: 'Siachen-Gletscher', nameEn: 'Siachen Glacier', capital: '', continent: "asien", population: 0, gdpBillionUsd: 0.0, areaKm2: 0.0, hdi: 0.0, lifeExpectancy: 0.0, kind: "x" },
+  { iso2: "ACI", iso3: "ACI", key: "name:Ashmore", name: 'Ashmore- und Cartierinseln', nameEn: 'Ashmore and Cartier Islands', capital: '', continent: "ozeanien", population: 0, gdpBillionUsd: 0.0, areaKm2: 199.0, hdi: 0.0, lifeExpectancy: 0.0, kind: "t" },
 ];
 
 export const COUNTRY_BY_KEY: Record<string, Country> = Object.fromEntries(
@@ -304,9 +311,22 @@ export function gdpPerCapita(c: Country): number {
 }
 
 export function matchFeatureKey(id: string | number | null | undefined, name?: string): string {
+  if (name && NAME_FEATURE_KEYS[name]) return NAME_FEATURE_KEYS[name];
   if (id !== null && id !== undefined && String(id).length > 0) {
-    return String(id).padStart(3, "0");
+    const padded = String(id).padStart(3, "0");
+    if (COUNTRY_BY_KEY[padded]) return padded;
+    if (name) return `name:${name}`;
+    return padded;
   }
   if (name) return `name:${name}`;
   return "";
 }
+
+const NAME_FEATURE_KEYS: Record<string, string> = {
+  Kosovo: "name:Kosovo",
+  Somaliland: "name:Somaliland",
+  "N. Cyprus": "name:N. Cyprus",
+  "Ashmore and Cartier Is.": "name:Ashmore",
+  "Siachen Glacier": "name:Siachen Glacier",
+  "Indian Ocean Ter.": "name:Indian Ocean Ter.",
+};
